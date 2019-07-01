@@ -31,7 +31,7 @@ app.get('/api/courses',(req,res) =>{
  */
 app.get('/api/courses/:id', (req,res) => {
     const course = courses.find( c => c.id === parseInt(req.params.id));
-    if(!course)res.status(404).send('The course with the given ID was not found');
+    if(!course)return res.status(404).send('The course with the given ID was not found');
     res.send(course);
 });
 /**
@@ -40,11 +40,7 @@ app.get('/api/courses/:id', (req,res) => {
  * /api/courses
  */
 app.post('/api/courses', (req, res) =>{
-    if(!req.body.name || req.body.name.length < 3){
-        //400 BAD REQUEST
-        res.status(400).send('Name is requiered and should be minimum 3 characters.');
-        return;
-    }
+    if(!req.body.name || req.body.name.length < 3)return res.status(400).send('Name is requiered and should be minimum 3 characters.');
 
     const course = {
         id: courses.length + 1,
@@ -72,19 +68,35 @@ app.put('/api/courses/:id', (req, res) => {
 
     */
    const course = courses.find( c => c.id === parseInt(req.params.id));
-   if(!course)res.status(404).send('The course with the given ID was not found');
+   if(!course)return res.status(404).send('The course with the given ID was not found');
+   
 
-   if(!req.body.name || req.body.name.length < 3){
-    //400 BAD REQUEST
-    res.status(400).send('Name is requiered and should be minimum 3 characters.');
-    return;
-    }
+   if(!req.body.name || req.body.name.length < 3)return res.status(400).send('Name is requiered and should be minimum 3 characters.');
 
     course.name = req.body.name;
     res.send(course);
     
 });
 
+app.delete('/api/courses/:id', (req, res) => {
+
+    /*
+        Look up the course
+        Not existing, return 404
+
+        Delete
+
+        Return the same course
+    */
+
+   const course = courses.find( c => c.id === parseInt(req.params.id));
+   if(!course)return res.status(404).send('The course with the given ID was not found');
+   
+   const index = courses.indexOf(course);
+   courses.splice(index,1);
+
+   res.send(course);
+});
 
 // PORT Environment Variable
 // export PORT=5000
