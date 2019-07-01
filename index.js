@@ -54,8 +54,36 @@ app.post('/api/courses', (req, res) =>{
     res.send(course);
 });
 
+/**
+ * PUT
+ * /api/courses/:id
+ */
+app.put('/api/courses/:id', (req, res) => {
+    //Process
+    /*
+        Look up for the course
+        If not existing, return 404
 
+        Validate
+        if invalid, return 400 - Bad request
 
+        Update course
+        Return the updated course
+
+    */
+   const course = courses.find( c => c.id === parseInt(req.params.id));
+   if(!course)res.status(404).send('The course with the given ID was not found');
+
+   if(!req.body.name || req.body.name.length < 3){
+    //400 BAD REQUEST
+    res.status(400).send('Name is requiered and should be minimum 3 characters.');
+    return;
+    }
+
+    course.name = req.body.name;
+    res.send(course);
+    
+});
 
 
 // PORT Environment Variable
