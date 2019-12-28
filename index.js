@@ -1,8 +1,17 @@
+const logger = require('./logger');
+const authenticator = require('./authenticator');
 const express  = require('express');
 const app = express();
 
 //MiddleWare
 app.use(express.json());
+//Url encoder
+app.use(express.urlencoded({extended: true})); //key=value&key=value
+app.use(express.static('public'));
+//Custom middleware runs in sequence
+app.use(logger);
+
+app.use(authenticator);
 
 //first argument, URL
 //second arguments, callback function
