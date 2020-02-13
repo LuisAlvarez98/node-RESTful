@@ -1,3 +1,6 @@
+const config = require('config');
+const morgan = require('morgan');
+const helmet = require('helmet');
 const logger = require('./logger');
 const authenticator = require('./authenticator');
 const express  = require('express');
@@ -8,6 +11,20 @@ app.use(express.json());
 //Url encoder
 app.use(express.urlencoded({extended: true})); //key=value&key=value
 app.use(express.static('public'));
+app.use(helmet());
+
+
+/**
+ * Configuration 
+ */
+console.log('Application Name: ' + config.get('name'));
+console.log("Mail Server: " + config.get('mail.host'));
+console.log("Mail Password: " + config.get('mail.password'))
+//export NODE_ENV=production used to change environment variable.
+if(app.get('env') === 'development'){
+    app.use(morgan('tiny')); //Logs the requests.
+    console.log("Morgan enabled...")
+}
 //Custom middleware runs in sequence
 app.use(logger);
 
