@@ -1,0 +1,29 @@
+{
+  "name": "node-RESTful",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuisAlvarez98/node-RESTful.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LuisAlvarez98/node-RESTful/issues"
+  },
+  "homepage": "https://github.com/LuisAlvarez98/node-RESTful#readme",
+  "dependencies": {
+    "config": "^3.3.1",
+    "debug": "^4.1.1",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
+    "mongodb": "^3.5.5",
+    "morgan": "^1.9.1",
+    "pug": "^2.0.4"
+  }
+}
