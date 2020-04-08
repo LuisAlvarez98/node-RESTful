@@ -70,5 +70,40 @@ async function getCourses(){
     //.count(); count documents in mongodb
   console.log(courses);
 }
+async function updateCourseFirst(id){
+  // Approach: UpdateFirst
+    const course = await Course.findByIdAndUpdate(id, {
+      $set:{
+        author: 'Ja',
+        isPublished: false
+      }
+    }, {new: true});
+    console.log(course)
+}
+//updateCourseFirst("5e89e8fd5016084f18838051");
+//Input from the client
+async function updateCourseQueryFirst(id){
+  // Approach: Query First
+  // findById()
+  // Modify its properties
+  // Save
+    const course = await Course.findById(id);
+    if(!course) return;
+    course.isPublished = true;
+    course.author = 'Another Author';
+    const result = await course.save();
+    console.log(result)
+}
+//updateCourseQueryFirst("5e89e8fd5016084f18838051");
 
-getCourses();
+async function removeCourse(id){
+  const result = await Course.deleteOne({_id: id});
+  //returns a promise
+  console.log(result);
+}
+async function removeMany(id){
+  const course = await Course.findByIdAndRemove(id)
+  //returns a promise
+  console.log(course);
+}
+removeMany("5e89e8fd5016084f18838051")
